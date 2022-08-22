@@ -1,0 +1,352 @@
+<template>
+
+  <!--<h2 style="font-size:20px; font-weight:600; margin:15px 0; background:orange; padding:5px;">ASSESSMENT OF COMPETITION	
+    </h2>	-->
+    <div class="">
+      <!--<h1 style="font-size:24px; font-weight:700;">ARGENTINA </h1>-->
+
+      <div style="float:right">
+        <div class="header5"></div>
+        <input type="checkbox" class="openSidebarMenu5" id="openSidebarMenu5">
+        <label for="openSidebarMenu5" class="sidebarIconToggle5">
+          <lightning-icon icon-name="action:info" size="small" alternative-text="Instructions"
+            title="Instructions"></lightning-icon>
+        </label>
+        <div class="sidebarMenu5"  >
+          <lightning-formatted-rich-text value={instrustions}>
+          </lightning-formatted-rich-text>
+           
+        </div>
+      </div>
+    </div>
+   
+    <c-gtm-filter-panel panel-status={panelStatus} onaction={handleFiltersAction}>
+    </c-gtm-filter-panel>
+
+  <div class="slds-scrollable_x slds-scrollable_y" style="height:300px; overflow-y:scroll; margin-top:15px;">
+
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+      aria-labelledby="element-with-table-label other-element-with-table-label">
+      <thead>
+        <tr>
+          <th width="235"  class="fix fixHeader" >{labels.Customer_Lead_Customer}
+            <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="customer" onclick={handleSort}></lightning-icon>
+          </th>
+          <th width="193"  class="fixHeader" style="text-align:center;">{labels.Write_UPL_POSITION}
+            <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="uplposition" onclick={handleSort}></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.UPL_s_Share_of_Wallet1}<br/>{labels.UPL_s_Share_of_Wallet2}
+            <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="uplshare" onclick={handleSort} ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Write_the_name_of_the_1_Company}
+          
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning"   name="Competitor1Name" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Indicate_the_Share_of_Wallet_of_the_1_Company1} <br/>{labels.Indicate_the_Share_of_Wallet_of_the_1_Company2} 
+           
+            <lightning-icon size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="Indicate1" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Write_the_name_of_the_2_Company}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning"  name="Competitor2Name"></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Indicate_the_Share_of_Wallet_of_the_2_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_2_Company2}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="Indicate2" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Write_the_name_of_the_3_Company}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning"  name="Competitor3Name" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Indicate_the_Share_of_Wallet_of_the_3_Company1} <br/>{labels.Indicate_the_Share_of_Wallet_of_the_3_Company2}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="Indicate3" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Write_the_name_of_the_4_Company}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning"  name="Competitor4Name" ></lightning-icon>
+          </th>
+          <th width="193"  class="fixHeader" style="text-align:center;">{labels.Indicate_the_Share_of_Wallet_of_the_4_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_4_Company2}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="Indicate4" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Write_the_name_of_the_5_Company}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning"  name="Competitor5Name"></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Indicate_the_Share_of_Wallet_of_the_5_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_5_Company2}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="Indicate5" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Write_the_name_of_the_6_Company}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning"  name="Competitor6Name" ></lightning-icon>
+          </th>
+          <th width="193"  class="fixHeader" style="text-align:center;">{labels.Indicate_the_Share_of_Wallet_of_the_6_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_6_Company2}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="Indicate6" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Write_the_name_of_the_7_Company}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning"  name="Competitor7Name" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Indicate_the_Share_of_Wallet_of_the_7_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_7_Company2}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="Indicate7" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Write_the_name_of_the_8_Company}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning"  name="Competitor8Name" ></lightning-icon>
+          </th>
+          <th width="193" class="fixHeader" style="text-align:center;">{labels.Indicate_the_Share_of_Wallet_of_the_8_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_8_Company2}
+            <lightning-icon  size="xx-small" alternative-text="Warning!"
+              class="slds-m-right" title="Warning" name="Indicate8" ></lightning-icon>
+          </th>
+          <th class="fixHeader">{labels.Remaining}(%)
+            <!-- <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!" class="slds-m-right" title="" name="remainingPercentage" onclick={handleSort}>
+            </lightning-icon> -->
+          </th>
+          <th class="fixHeader">{labels.Check_If_Distribution_Is_Correct}    
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      <template for:each={gtmcompetitor1} for:item="accItem" for:index="index">
+        <tr key={accItem.id}  >
+          <td class="fix" width="235" title={accItem.customer}>{accItem.customer} </td>
+        <template if:true={disableAll}>
+          <td width="193"   style="text-align:center;">
+            <lightning-input type="Number"  data-account={accItem.customerId} name="UPL_Position__c" step="any" min="9" max="100" style="margin-top:-16px;" disabled={disableAll} value={accItem.uplposition} data-id={accItem.id} data-name="UPL_Position__c" onfocusout={handleInputChange} message-when-range-underflow={labels.X1_to_8_values_for_UPL_is_not_allowed}></lightning-input>
+          </td>
+          <td width="193" style="text-align:center;">
+          <lightning-input  data-account={accItem.customerId} name="UPLs_share_of_wallet__c" type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;"  disabled={disableAll} value={accItem.uplshare} data-id={accItem.id} data-name="UPLs_share_of_wallet__c" onfocusout={handleInputChange} formatter="percent-fixed" ></lightning-input>
+          </td>
+        </template>
+        <template if:false={disableAll}>
+          <td width="193"  style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="UPL_Position__c" type="Number" step="any" min="9" max="100.00" style="margin-top:-16px;" disabled={accItem.isUPLSelected} value={accItem.uplposition} data-id={accItem.id} data-name="UPL_Position__c" onfocusout={handleInputChange} message-when-range-underflow={labels.X1_to_8_values_for_UPL_is_not_allowed}></lightning-input>
+          </td>
+          <td width="193" style="text-align:center;">
+          <lightning-input  data-account={accItem.customerId} name="UPLs_share_of_wallet__c" type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;"  disabled={accItem.isUPLSelected} value={accItem.uplshare} data-id={accItem.id} data-name="UPLs_share_of_wallet__c" onfocusout={handleInputChange} formatter="percent-fixed" ></lightning-input>
+          </td>
+        </template>
+
+          <td role="gridcell"   width="193" style="text-align:center;">
+            <div class="" title={accItem.Competitor1Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                   
+                    placeholder="Select"
+                    value={accItem.Competitor1}
+                    style="width: 193px;"
+                    data-id={accItem.id} 
+                    disabled={disableAll}
+                    data-name="Competitor_Name_1__c"
+                    onchange={handleInputChange}
+                    options={accItem.remainingOptions1}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div>
+          </td>
+         
+
+          <td width="193" style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="Indicate_share_wallet_of_competitor_1__c" type="Number"  step="0.01" min="0.00" max="100.00" style="margin-top:-16px;" value={accItem.Indicate1} data-id={accItem.id} data-index={index} data-name="Indicate_share_wallet_of_competitor_1__c" onfocusout={handleInputChange} disabled={disableAll} formatter="percent-fixed"></lightning-input>
+            <p if:true={accItem.validateIndicator1} style="color: red;">{labels.Please_check_all_distribution}</p>
+          </td>
+          <td role="gridcell" width="193">
+            <div class="" title={accItem.Competitor2Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                    placeholder="Select"
+                    value={accItem.Competitor2}
+                    style="width: 193px;"
+                    disabled={disableAll}
+                    data-id={accItem.id} 
+                    data-name="Competitor_Name_2__c"
+                    onchange={handleInputChange}
+                    options={accItem.remainingOptions2}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td width="193" style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="Indicate_share_wallet_of_competitor_2__c" type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;" value={accItem.Indicate2} data-id={accItem.id} data-name="Indicate_share_wallet_of_competitor_2__c" onfocusout={handleInputChange} disabled={disableAll} formatter="percent-fixed"></lightning-input>
+            <p if:true={accItem.validateIndicator2} style="color: red;">{labels.Please_check_all_distribution}</p>
+          </td>
+          <td role="gridcell" width="193" style="text-align:center;">
+            <div class="" title={accItem.Competitor3Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                    placeholder="Select"
+                    value={accItem.Competitor3}
+                    style="width: 193px;"
+                    data-id={accItem.id} 
+                    disabled={disableAll}
+                    data-name="Competitor_Name_3__c"
+                    onchange={handleInputChange}
+                    options={accItem.remainingOptions3}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td width="193" style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="Indicate_share_wallet_of_competitor_3__c" type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;" value={accItem.Indicate3} data-id={accItem.id} data-name="Indicate_share_wallet_of_competitor_3__c" onfocusout={handleInputChange} disabled={disableAll} formatter="percent-fixed"></lightning-input>
+            <p if:true={accItem.validateIndicator3} style="color: red;">{labels.Please_check_all_distribution}</p>
+          </td>
+          <td role="gridcell" width="193" style="text-align:center;">
+            <div class="" title={accItem.Competitor4Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                    placeholder="Select"
+                    disabled={disableAll}
+                    value={accItem.Competitor4}
+                    style="width: 193px;"
+                    data-id={accItem.id} 
+                    data-name="Competitor_Name_4__c"
+                    onchange={handleInputChange}
+                    options={accItem.remainingOptions4}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td width="193" style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="Indicate_share_wallet_of_competitor_4__c"  type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;" value={accItem.Indicate4} data-id={accItem.id} data-name="Indicate_share_wallet_of_competitor_4__c" onfocusout={handleInputChange} disabled={disableAll} formatter="percent-fixed"></lightning-input>
+            <p if:true={accItem.validateIndicator4} style="color: red;">{labels.Please_check_all_distribution}</p>
+          </td>
+          <td role="gridcell" width="193" style="text-align:center;">
+            <div class="" title={accItem.Competitor5Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                    placeholder="Select"
+                    disabled={disableAll}
+                    style="width: 193px;"
+                    value={accItem.Competitor5}
+                    data-id={accItem.id} 
+                    data-name="Competitor_Name_5__c"
+                    onchange={handleInputChange}
+                    options={accItem.remainingOptions5}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td width="193" style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="Indicate_share_wallet_of_competitor_5__c" type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;" value={accItem.Indicate5} data-id={accItem.id} data-name="Indicate_share_wallet_of_competitor_5__c" onfocusout={handleInputChange} disabled={disableAll} formatter="percent-fixed"></lightning-input>
+            <p if:true={accItem.validateIndicator5} style="color: red;">{labels.Please_check_all_distribution}</p>
+          </td>
+          <td role="gridcell" width="193" style="text-align:center;">
+            <div class="" title={accItem.Competitor6Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                    placeholder="Select"
+                    value={accItem.Competitor6}
+                    style="width: 193px;"
+                    data-id={accItem.id} 
+                    disabled={disableAll}
+                    data-name="Competitor_Name_6__c"
+                    onchange={handleInputChange}
+                    options={accItem.remainingOptions6}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td width="193" style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="Indicate_share_wallet_of_competitor_6__c" type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;" value={accItem.Indicate6} data-id={accItem.id} data-name="Indicate_share_wallet_of_competitor_6__c" onfocusout={handleInputChange} disabled={disableAll} formatter="percent-fixed"></lightning-input>
+            <p if:true={accItem.validateIndicator6} style="color: red;">{labels.Please_check_all_distribution}</p>
+          </td>
+          <td role="gridcell" width="193"  style="text-align:center;">
+            <div class="" title={accItem.Competitor7Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                    placeholder="Select"
+                    value={accItem.Competitor7}
+                    style="width: 193px;"
+                    data-id={accItem.id} 
+                    data-name="Competitor_Name_7__c"
+                    onchange={handleInputChange}
+                    disabled={disableAll}
+                    options={accItem.remainingOptions7}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td width="193" style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="Indicate_share_wallet_of_competitor_7__c" type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;" value={accItem.Indicate7} data-id={accItem.id} data-name="Indicate_share_wallet_of_competitor_7__c" onfocusout={handleInputChange} disabled={disableAll} formatter="percent-fixed"></lightning-input>
+            <p if:true={accItem.validateIndicator7} style="color: red;">{labels.Please_check_all_distribution}</p>
+          </td>
+          <td role="gridcell" width="193" style="text-align:center;">
+            <div class="" title={accItem.Competitor8Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                    
+                    placeholder="Select"
+                    value={accItem.Competitor8}
+                    style="width: 193px;"
+                    data-id={accItem.id} 
+                    disabled={disableAll}
+                    data-name="Competitor_Name_8__c"
+                    onchange={handleInputChange}
+                    options={accItem.remainingOptions8}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td width="193" style="text-align:center;">
+            <lightning-input data-account={accItem.customerId} name="Indicate_share_wallet_of_competitor_8__c" type="Number" step="0.01" min="0" max="100" style="margin-top:-16px;" value={accItem.Indicate8} data-id={accItem.id} data-name="Indicate_share_wallet_of_competitor_8__c" onfocusout={handleInputChange} disabled={disableAll} formatter="percent-fixed"></lightning-input>
+            <p if:true={accItem.validateIndicator8} style="color: red;">{labels.Please_check_all_distribution}</p>
+          </td>
+          <td data-accountid={accItem.id} class="percentage dontremove" >{accItem.remainingPercentage} %</td>
+            <td if:true={accItem.isDistributionCompleted} data-accountid={accItem.id} class="distribution dontremove"
+              style="background:#368628; color:#fff;">{labels.Distribution_completed}
+            </td>
+            <td if:false={accItem.isDistributionCompleted} data-accountid={accItem.id} class="distribution dontremove"
+            style="background:red; color:#fff;">{labels.Please_check_the_values_Not_matching_100}
+          </td>
+        </tr>
+        
+        
+      </template>
+      </tbody>
+    
+    
+    
+    </table>
+    <div if:true={showLoading} class="slds-spinner_inline spinner-padding">
+      <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </div>
+  </div>
+
+  <c-pagination-cmp page-size-value="50" tabledata={gtmcompetitor} onaction={handlePaginationAction}>
+    <div class="slds-float_right" style="margin-right: 20rem;" slot="pageNumber"><b class="pagenumber">Page:</b></div>
+  </c-pagination-cmp>
+  
+</template>

@@ -1,0 +1,113 @@
+<template>
+  <div class="">
+    <div style="float:right">
+      <div class="header2"></div>
+      <input type="checkbox" class="openSidebarMenu2" id="openSidebarMenu2">
+      <label for="openSidebarMenu2" class="sidebarIconToggle2">
+        <lightning-icon icon-name="action:info" size="small" alternative-text={labels.Instructions} title={labels.Instructions}>
+        </lightning-icon>
+      </label>
+      <div class="sidebarMenu2">
+        <lightning-formatted-rich-text value={instrustions}>
+        </lightning-formatted-rich-text>
+      </div>
+    </div>
+  </div>
+  
+  <c-gtm-filter-panel onaction={handleFiltersAction} panel-status={panelStatus}></c-gtm-filter-panel>
+
+  <div class="table-scroll" style="height:300px; margin-top:15px;">
+
+    <table class="slds-table_fixed-layout slds-table slds-table_bordered"
+      aria-labelledby="element-with-table-label other-element-with-table-label">
+
+      <thead>
+        <tr>
+          <th class="fix fixHeader slds-cell-wrap" style="width: 250px;" >{labels.Customer_Lead_Customer}
+            <lightning-icon icon-name="utility:sort" onclick={handleSort} name="client" size="xx-small" alternative-text="sort" class="slds-m-right"
+              title=""></lightning-icon>
+          </th>
+          <th style="text-align:center;width: 130px;" class="slds-cell-wrap fixHeader">{labels.Customer_Type}
+            <lightning-icon icon-name="utility:sort" onclick={handleSort} name="customerType" size="xx-small" alternative-text="sort" class="slds-m-right"
+              title=""></lightning-icon>
+          </th>
+          <th style="text-align:center;width: 130px;" class="slds-cell-wrap fixHeader">{labels.Confirm_Customer_Type_Indicated_on_the_Left_Adjacent_Cell1}
+          </th>
+          <th style="text-align:center;width: 100px;" class="slds-cell-wrap fixHeader">{labels.Total_Purcahse_of_Crop_Protection_Industry_Price1}
+            <lightning-icon icon-name="utility:sort" size="xx-small" onclick={handleSort} name="totalPurcahseCrop" alternative-text="sort" class="slds-m-right"
+              title=""></lightning-icon>
+          </th>
+          <th style="text-align:center;width: 130px;" class="slds-cell-wrap fixHeader">{labels.Estimated_Markup_of_Channel_In_of_Sales1}
+            <lightning-icon icon-name="utility:sort" size="xx-small" onclick={handleSort} name="estimateChannel" alternative-text="sort" class="slds-m-right"
+              title=""></lightning-icon>
+          </th>
+          <th style="text-align:center;width: 330px;" class="slds-cell-wrap fixHeader">{labels.Confirm_the_Estimated_Revenues_of_the_Customer_in1}
+            
+          </th>
+          <th style="text-align:center;width: 100px;" class="slds-cell-wrap fixHeader">{labels.Estimated_Number_Of_Sales_REP_on_Role1}
+            <lightning-icon icon-name="utility:sort" onclick={handleSort} name="estimateSalesRepRole" size="xx-small" alternative-text="sort" class="slds-m-right"
+              title=""></lightning-icon>
+          </th>
+          <th style="text-align:center;width: 100px;" class="slds-cell-wrap fixHeader">{labels.Number_of_Stories_That_the_Channel_has1}
+            <lightning-icon icon-name="utility:sort" onclick={handleSort} name="storiesChannelHas" size="xx-small" alternative-text="sort" class="slds-m-right"
+              title=""></lightning-icon>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <template for:each={paginatedGtmPotentialProfile} for:item="gtm" for:index="index">
+          <tr  key={gtm.id}>
+            <td class="slds-truncate fix" style="width: 150px;" title={gtm.client}>{gtm.client}</td>
+            <td >{gtm.customerType}</td>
+            <td role="gridcell">
+              <div class="" title="" style="margin-top: -15px;">
+                <div class="slds-form-element">
+                  <div class="slds-form-element__control">
+                    <lightning-combobox
+                    data-id={gtm.id}
+                    data-name="GTM_Customer_Type__c"
+                    value={gtm.confirmCustomerType}
+                    placeholder="Select Progress"
+                    options={customerTypeOptions}
+                    onchange={handleChangeInput} 
+                    disabled={disableAll} ></lightning-combobox>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td style="text-align:center;">
+              <lightning-input style="margin-top:-16px;" type="number"  step="0.01" value={gtm.totalPurcahseCrop} data-id={gtm.id} data-name="Total_Purchase_of_Crop_Protection_PY__c" onfocusout={handleChangeInput} disabled={disableAll} min="0">
+              </lightning-input>
+            </td>
+            <td if:true={disableAll} style="text-align:center;">
+              <lightning-input style="margin-top:-16px;" type="number" step="0.01" value={gtm.estimateChannel} data-id={gtm.id} data-name="Estimated_Markup_of_Channel__c" onfocusout={handleChangeInput} disabled={disableAll} formatter="percent-fixed" min="0" max="100"></lightning-input>
+            </td>
+            <td if:false={disableAll} style="text-align:center;">
+              <lightning-input style="margin-top:-16px;" type="number" step="0.01" value={gtm.estimateChannel} data-id={gtm.id} data-name="Estimated_Markup_of_Channel__c" onfocusout={handleChangeInput} disabled={gtm.disableFields} formatter="percent-fixed"  min="0" max="100"></lightning-input>
+            </td>
+            <td style="">{gtm.confirmEstimatedRevenue}</td>
+            <td if:true={disableAll} style="text-align:center;">
+              <lightning-input style="margin-top:-16px;" type="number"  value={gtm.estimateSalesRepRole} data-id={gtm.id} data-name="Estimated_Number_of_Sales_Rep_on_Role__c" onfocusout={handleChangeInput} disabled={disableAll} min="0" step="1" pattern="^(0|[1-9][0-9]*)$"></lightning-input>
+            </td>
+            <td if:false={disableAll} style="text-align:center;">
+              <lightning-input style="margin-top:-16px;" type="number" value={gtm.estimateSalesRepRole} data-id={gtm.id} data-name="Estimated_Number_of_Sales_Rep_on_Role__c" onfocusout={handleChangeInput} disabled={gtm.disableFields} min="0" step="1" pattern="^(0|[1-9][0-9]*)$"></lightning-input>
+            </td>
+            <td if:true={disableAll} style="text-align:center;">
+              <lightning-input style="margin-top:-16px;" type="number"  value={gtm.storiesChannelHas} data-id={gtm.id} data-name="Number_of_Stores_That_the_Channel_Has__c" onfocusout={handleChangeInput} disabled={disableAll} min="0" step="1" pattern="^(0|[1-9][0-9]*)$"></lightning-input>
+            </td>
+            <td if:false={disableAll} style="text-align:center;">
+              <lightning-input style="margin-top:-16px;" type="number" value={gtm.storiesChannelHas} data-id={gtm.id} data-name="Number_of_Stores_That_the_Channel_Has__c" onfocusout={handleChangeInput} disabled={gtm.disableFields} min="0" step="1" pattern="^(0|[1-9][0-9]*)$" ></lightning-input>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <div if:true={showLoading} class="slds-spinner_inline spinner-padding">
+      <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </div>
+  </div>
+
+  <c-pagination-cmp page-size-value="100" tabledata={gtmPotentialProfile}  onaction={handlePaginationAction}>
+    <div class="slds-float_right" style="margin-right: 20rem;" slot="pageNumber"><b class="pagenumber">{labels.Page}:</b></div>
+  </c-pagination-cmp>
+</template>

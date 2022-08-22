@@ -1,0 +1,92 @@
+<template>
+  <div class="">
+    <!--<h1 style="font-size:24px; font-weight:700;">ARGENTINA </h1>-->
+
+    <div style="float:right">
+      <div class="header6"></div>
+      <input type="checkbox" class="openSidebarMenu6" id="openSidebarMenu6">
+      <label for="openSidebarMenu6" class="sidebarIconToggle6">
+        <lightning-icon icon-name="action:info" size="small" alternative-text="Instructions"
+          title={label.Instructions}></lightning-icon>
+      </label>
+      <div class="sidebarMenu6">
+        <lightning-formatted-rich-text value={instrustions}>
+        </lightning-formatted-rich-text>
+      </div>
+    </div>
+  </div>
+ 
+  <c-gtm-filter-panel onaction={handleFiltersAction} panel-status={panelStatus}></c-gtm-filter-panel>
+
+   
+      <div class="table-scroll" style="height:300px; margin-top:15px;">
+
+        <table class="slds-table_fixed-layout slds-table slds-table_bordered"
+          aria-labelledby="element-with-table-label other-element-with-table-label">
+          <thead>
+            <tr>
+              <th class="fix slds-cell-wrap fixHeader" >{label.GTM_Customer}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning" name="customerName" onclick={handleSort}></lightning-icon>
+              </th>
+              <th class="slds-cell-wrap fixHeader" style="text-align:center; width: 150px;" scope="col" >{label.Total_Purchase_in_PY}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning" name="totalCompaniesPurches" onclick={handleSort}></lightning-icon>
+              </th>
+              <th class="slds-cell-wrap fixHeader" style="text-align:center; width: 150px;"> {label.Estimated_Growth_in_CY}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning" name="EstimatedGrowthCY" onclick={handleSort}></lightning-icon>
+              </th>
+              <th class="slds-cell-wrap fixHeader" style="text-align:center; width: 150px;"> {label.Estimated_Sales_in_CY}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning" onclick={handleSort}></lightning-icon>
+              </th>
+              <th class="slds-cell-wrap fixHeader" style="text-align:center; width: 150px;"> {label.Estimated_Growth_in_NY}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning" name="EstimatedGrowthNY" onclick={handleSort}></lightning-icon>
+              </th>
+              <th class="slds-cell-wrap fixHeader" style="text-align:center; width: 150px;"> {label.Estimated_Sales_in_NY}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning" onclick={handleSort}></lightning-icon>
+              </th>
+              <th class="slds-cell-wrap fixHeader" style="text-align:center; width: 150px;"> {label.Estimated_Growth_in_NNY}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning" name="EstimatedGrowth2NY" onclick={handleSort}></lightning-icon>
+              </th>
+              <th class="slds-cell-wrap fixHeader" style="text-align:center; width: 150px;"> {label.Estimated_Sales_in_NNY}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning" onclick={handleSort}></lightning-icon>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <template for:each={paginatedGTMOutlookDetails} for:item="GTM">
+              <tr key={GTM.Id}>
+              <td key={GTM.Id} class="fix">{GTM.customerName}</td>
+              <td key={GTM.Id}>{GTM.totalCompaniesPurchesLocale}</td>
+              <td>
+                <lightning-input disabled={disableAll} type="Number" style="margin-top:-16px;" onfocusout={handleFieldChange} data-id={GTM.Id} value={GTM.EstimatedGrowthCY} data-name="Estimated_Growth_PY_to_CY__c" formatter="percent-fixed" step=".01" max="100"></lightning-input>
+              </td>
+              <td key={GTM.Id}>{GTM.confirmtotalSalesChannelCY}</td>
+              <td>
+                <lightning-input disabled={disableAll} type="Number" style="margin-top:-16px;" onfocusout={handleFieldChange} data-id={GTM.Id} value={GTM.EstimatedGrowthNY} data-name="Estimated_Growth_PY_to_NY__c" formatter="percent-fixed" step=".01" max="100"></lightning-input>
+              </td>
+              <td key={GTM.Id}>{GTM.confirmtotalSalesChannelNY}</td>
+              <td>
+                <lightning-input disabled={disableAll} type="Number" style="margin-top:-16px;" onfocusout={handleFieldChange} data-id={GTM.Id} value={GTM.EstimatedGrowth2NY} data-name="Estimated_Growth_NY_to_2NY__c" formatter="percent-fixed" step=".01" max="100"></lightning-input>
+              </td>
+              <td key={GTM.Id}>{GTM.confirmtotalSalesChanneN2Y}</td>
+             </tr>
+            </template>
+         </tbody>
+        </table>
+      
+
+      </div>
+      <c-pagination-cmp page-size-value="100" tabledata={GTMOutlookDetails}  onaction={handlePaginationAction}>
+        <div class="slds-float_right" style="margin-right: 20rem;" slot="pageNumber"><b class="pagenumber">Page:</b></div>
+      </c-pagination-cmp>
+
+    </template>

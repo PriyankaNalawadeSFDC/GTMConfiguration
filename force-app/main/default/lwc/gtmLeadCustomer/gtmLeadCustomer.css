@@ -1,0 +1,29 @@
+[lightning-input_input-host] {
+    display: block;
+    margin-top: -10px;
+}
+
+td:hover{
+    cursor:move;
+    }
+
+    .slds-m-right{
+        position: relative;
+      right: 0px;
+      margin-left:5px;
+      
+      }
+
+      .downloadi{
+        margin-top:7px; margin-left:-100px;
+      }
+
+     
+
+      @media only screen and (max-width: 768px) {
+
+        .downloadi{
+            margin-top:7px; margin-left:0px;
+          }
+
+        }

@@ -1,0 +1,93 @@
+<template>
+<div>
+<c-grz_header-image-cmp bgimg={bgImage} imglabel={label.detailsLabel} customcss='top: 9.5%;'></c-grz_header-image-cmp>
+<div class="outerClass">
+<div>
+<c-grz_bread-crumb labelone='Prices & Discounts' labeltwo='' linkone='' linktwo=''>
+</c-grz_bread-crumb>
+</div>
+
+<div>
+        
+            <!-- <template if:false={isMobileView}> -->
+                
+                <div class="table-head-div slds-p-around_medium">
+                    <template if:true={loaded1}>
+                        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                    </template>
+                    <div class="slds-grid slds-wrap InnerCon">
+                        
+                        <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_12-of-12 slds-p-top_small">
+                            <h3 class="headingCls">Fetch Schemes:</h3>
+                        </div>
+                        
+                            <div class="slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-size_6-of-12">
+                                <lightning-combobox
+                                    placeholder = "Month"
+                                    value={monthType}
+                                    options={MonthOptions}
+                                    onchange={handleMonthOption} >
+                                </lightning-combobox>
+                            </div>
+                            <div class="Year slds-p-left_small slds-p-right_small slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-size_6-of-12">
+                                <lightning-combobox
+                                    placeholder = "Year"
+                                    value={yearType}
+                                    options={YearOptions}
+                                    onchange={handleYearOption} >
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-size_12-of-12 divButtonCls">
+                                    <button class="buttonClass componentNotoSansBold" disabled={disableButton} onclick={handleButtonClick}>Get Records</button>
+                            </div>
+                        
+                    
+                    </div>
+                    <template if:true={priceData}>
+                        <template for:each={priceData} for:item="item">
+                    <div key={item.Id} class="slds-grid slds-wrap slds-p-bottom_small">
+                        <div class="slds-col slds-p-right_large slds-large-size_10-of-12 slds-medium-size_10-of-12 slds-size_12-of-12" style="margin-top: 1%;">
+                            <div class="circularClass greyClr">Circular Name:&nbsp;<span  class="orangeClr">PL/{zoneCode}/{customerTypeVal}/{selectedMonth}/{selectedYear}/{zoneName}</span></div>
+                            <div class="sbuClass blackClr">{sbuName} - {zoneNameFull} Zone Distributors Price List for Period {item.StartDate} till {item.EndDate}</div>
+                        </div>
+                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-size_12-of-12">
+                            <div class="download-div ">
+                                <div class="componentNotoSansBold">
+                                    <a href={item.pricesDiscountsUrl}  download="Prices_Discounts.pdf" target="_blank"><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span class="downloadText">Download PDF</span></button></a> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                </template>
+                </div>
+                    <!-- </template>
+                    
+                    
+                    <template if:true={isMobileView}>
+                        
+                        <template for:each={priceData} for:item="price" for:index="ind">
+                            <div key={price.Id} class="table-head-div slds-p-around_medium">
+                        <div key={price.Id} class="slds-grid slds-wrap">
+                                <div class="indexClass slds-col slds-size_2-of-12 slds-p-bottom_small">
+                                    {price.Ind}  
+                                </div> 
+                                <div class="slds-col slds-size_10-of-12 slds-p-bottom_small">
+                                    <p>Product Name:<span style="font-weight:bold;">{price.SKUName}</span></p>
+                                    <p>Scheme Name:<span style="font-weight:bold;"></span></p>
+                                </div> 
+                                <div class="slds-col slds-size_12-of-12 slds-border_top slds-p-top_small">
+                                    <span style="font-weight:bold;">{price.StartDate} TO {price.EndDate}</span>
+                                    <span><a class="slds-float_right" data-id={price.Id} href={pricesDiscountUrl} download="Prices_Discounts.pdf" target="_blank"  onclick={makePricesUrl}>Download</a></span>
+                                </div> 
+                            </div>
+                        </div>
+                        </template> 
+                    
+                    </template>-->
+                    
+                </div>
+    </div>
+</div>
+    
+</template>

@@ -1,0 +1,376 @@
+<template>
+
+
+
+
+  <div class="slds-grid slds-wrap slds-gutters" style="margin:0 !important; padding-bottom:15px;">
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:-10px; padding-left:20px;">
+      <div class="slds-truncate" title="">
+        <div class="slds-form-element" style=" margin-top:10px;" >
+          <label class="slds-form-element__label" for="select-11" style="font-weight:600;">{label.Filter_By}</label>
+          <div class="slds-form-element__control">
+            <div class="slds-select_container">
+              <select class="slds-select" id="select-11" onchange={handleCustomerFilter}>
+                <option value="Both">{label.Both}</option>
+                <option value="Lead Customer">{label.Lead_Customer}</option>
+                <option value="Non Lead Customer">{label.Non_Lead_Customer}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+      <!-- <lightning-input type="search" label="Search By Customer Name" style="font-weight:600;"></lightning-input> -->
+      <c-search-component onlookup={handleLookup} customertypeforfilter={customerTypeForFilter}></c-search-component>
+    </div>
+
+
+    
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+      <c-lookup-owner onlookup={handleLookupOwner} ></c-lookup-owner>
+      <!-- <lightning-input type="search" label="Search By Ownership" style="font-weight:600;"></lightning-input> -->
+
+    </div>
+
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12" style="text-align:center; margin-top:15px;">
+      <span style="font-weight:600; font-size:16px;"> {label.OR}</span>
+    </div>
+
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12" style="margin-top:6px;">
+
+      <lightning-input type="file"
+                     label={label.Update_Customer_Data}
+                     accept=".csv"
+                     onchange={importcsv}
+                     >
+    </lightning-input>
+    </div>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp; &nbsp;
+    &nbsp;
+    &nbsp;
+
+    
+    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12 downloadi"  style=" margin-top:20px;">
+      <!--<label>Update Customer Data</label>-->
+      <lightning-button-icon icon-name="utility:download" alternative-text="" title={label.Download}
+         onclick={handleDownload}></lightning-button-icon>
+
+
+         
+      <lightning-button-icon icon-name="utility:info" alternative-text="" title="Instructions"
+        style="margin-left:10px;  margin-top:15px;" name={clickedButtonLabel} onclick={showInstruction}  ></lightning-button-icon>
+       
+    </div>
+
+
+    <template if:true={boolVisible}>  
+      <div style="margin-top:10px; position:fixed; right:10px; top:270px; z-index:9999; padding:20px; background:#4e6285;color:white; width: 45%;">
+      <b> <u>Instructions</u> </b>
+      <ul>
+        <li>1. File to be uploaded must be in csv format (Save file in .csv format).</li>
+        <li>2. Please follow the same column sequence and column names as given in the template. Do not change or edit them.</li>
+        <li>3. Please enter details in UGDN and Path-finder columns only.</li>
+      </ul>
+    </div> 
+        
+  </template>     
+    
+    
+  </div>
+
+  <!-- End of Upper Section code -->
+
+
+
+  <template if:true={showLoadingSpinner}>
+    <div style="z-index: 10000 !important;">
+        <lightning-spinner alternative-text="Uploading......" size="medium" style="z-index: 10000 !important;"></lightning-spinner>
+    </div>
+</template>
+
+
+
+  <div class="slds-scrollable_x">
+
+
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+      aria-labelledby="element-with-table-label other-element-with-table-label" >
+      <!-- Heading part start of Table -->
+      <thead>
+        <tr class="slds-line-height_reset">
+          <th aria-label="Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+            <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+              <span class="slds-assistive-text">{label.Sort_by}: </span>
+              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                <span class="slds-truncate" title="Select">{label.Select} ({selectCount}) </span>
+                <!-- <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning"></lightning-icon> -->
+              </div>
+            </a>
+            <div class="slds-resizable">
+              <input type="range" aria-label="Name column width" class="slds-resizable__input slds-assistive-text"
+                id="cell-resize-handle-533" max="1000" min="20" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th aria-label="Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+            <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+              <span class="slds-assistive-text">{label.Sort_by}: </span>
+              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                <span class="slds-truncate" title="Lead Customer Name">{label.Lead_Customer_Name}</span>
+                <lightning-icon  onclick={handleSort} name="leadCustomerName" icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning"></lightning-icon>
+              </div>
+            </a>
+            <div class="slds-resizable">
+              <input type="range" aria-label="Name column width" class="slds-resizable__input slds-assistive-text"
+                id="cell-resize-handle-532" max="1000" min="20" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th aria-label="Account Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+            <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+              <span class="slds-assistive-text">{label.Sort_by}: </span>
+              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                <span class="slds-truncate" title="Lead Code / SAP Code">{label.Lead_Code_SAP_Code}</span>
+                <lightning-icon onclick={handleSort} name="leadCustomerCode" icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning"></lightning-icon>
+              </div>
+            </a>
+            <div class="slds-resizable">
+              <input type="range" aria-label="Account Name column width"
+                class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-534" max="1000" min="20"
+                tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th aria-label="Close Date" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+            <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+              <span class="slds-assistive-text">{label.Sort_by}: </span>
+              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                <span class="slds-truncate" title="Ownership">{label.Ownership}</span>
+                <lightning-icon onclick={handleSort} name="ownerShipName" icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning"></lightning-icon>
+              </div>
+            </a>
+            <div class="slds-resizable">
+              <input type="range" aria-label="Close Date column width" class="slds-resizable__input slds-assistive-text"
+                id="cell-resize-handle-535" max="1000" min="20" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th aria-label="Stage" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+            <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+              <span class="slds-assistive-text">{label.Sort_by}: </span>
+              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                <span class="slds-truncate" title="Customer Type">{label.Customer_Type}</span>
+                <lightning-icon onclick={handleSort} name="customerType" icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning"></lightning-icon>
+              </div>
+            </a>
+            <div class="slds-resizable">
+              <input type="range" aria-label="Stage column width" class="slds-resizable__input slds-assistive-text"
+                id="cell-resize-handle-536" max="1000" min="20" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th aria-label="Confidence" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+            <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+              <span class="slds-assistive-text">{label.Sort_by}: </span>
+              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                <span class="slds-truncate" title="Path Finder">{label.Path_Finder}</span>
+                <!-- <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning"></lightning-icon> -->
+              </div>
+            </a>
+            <div class="slds-resizable">
+              <input type="range" aria-label="Confidence column width" class="slds-resizable__input slds-assistive-text"
+                id="cell-resize-handle-537" max="1000" min="20" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th aria-label="Confidence" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+            <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+              <span class="slds-assistive-text">{label.Sort_by}: </span>
+              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                <span class="slds-truncate" title="Last Modified By">{label.Last_Modified_By}</span>
+                <lightning-icon onclick={handleSort} name="lastModifiedByName" icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning"></lightning-icon>
+              </div>
+            </a>
+            <div class="slds-resizable">
+              <input type="range" aria-label="Confidence column width" class="slds-resizable__input slds-assistive-text"
+                id="cell-resize-handle-538" max="1000" min="20" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th aria-label="Confidence" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+            <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+              <span class="slds-assistive-text">{label.Sort_by}: </span>
+              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                <span class="slds-truncate" title="Last Modified By Date &amp; Time">{label.Last_Modified_By_Date} &amp;
+                  Time</span>
+                <lightning-icon onclick={handleSort} name="lastModifiedDate" icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" title="Warning"></lightning-icon>
+              </div>
+            </a>
+            <div class="slds-resizable">
+              <input type="range" aria-label="Confidence column width" class="slds-resizable__input slds-assistive-text"
+                id="cell-resize-handle-539" max="1000" min="20" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <!-- heading part of table end -->
+
+
+      <tbody>
+        <template if:true={paginatedLeadAccData}>
+
+          <template for:each={paginatedLeadAccData} for:item="accObj" for:index="index">
+            <tr key={accObj.leadCustomerId} data-id={accObj.leadCustomerId} >
+
+              <td class="slds-text-align_center" role="gridcell">
+
+                <template if:true={accObj.forLeadCust}>
+                <input type="checkbox" name={index} data-id={accObj.leadCustomerId} value={accObj.index} checked={accObj.isSelected} onchange={handleCheckChange} tabindex="0"
+                  aria-labelledby="check-button-label-01 column-group-header"  disabled/>
+                </template>  
+
+                <template if:false={accObj.forLeadCust}>
+                  <input type="checkbox" name={index} data-id={accObj.leadCustomerId} value={accObj.index} checked={accObj.isSelected} onchange={handleCheckChange} tabindex="0"
+                  aria-labelledby="check-button-label-01 column-group-header" />
+                </template>
+                  <!-- <lightning-input type="checkbox" checked={accObj.isSelected} onchange={handleCheckChange} value={accObj.index} aria-labelledby="check-button-label-01 column-group-header">
+                  </lightning-input> -->
+              </td>
+
+              <th scope="row">
+                <div class="slds-truncate" title="">
+                  <a href="#" tabindex="0">{accObj.leadCustomerName}</a>
+                </div>
+              </th>
+
+
+              <td role="gridcell" style="text-align: center;">
+                <div class="slds-truncate" title="">{accObj.leadCustomerCode}</div>
+              </td>
+
+              <td role="gridcell">
+                <div class="slds-truncate" title="">
+                  <template if:true={accObj.showOnwerText}>
+                
+                  <lightning-input type="text" onclick={showOwnerLookup} label="" data-id={accObj.leadCustomerId} value={accObj.ownerShipName} onmouseout={handleOwnershipChange}></lightning-input>
+                </template>
+                  <template if:true={accObj.showOnwerLookup}>
+                    <c-lookup-users onlookup={handleUsers} valuesowner={accObj.ownerShipName}  indexid={index} data-id={accObj.leadCustomerId}></c-lookup-users>
+                  </template>
+                </div>
+
+              </td>
+
+
+              <td role="gridcell" >
+
+                <div class="" title="" >
+                  <div class="slds-form-element">
+                    <div class="slds-form-element__control" style="margin-top:-20px;">
+                      <lightning-combobox data-id={accObj.leadCustomerId} 
+                        name={index}
+                        placeholder=""
+                        value={accObj.customerType}
+                        onchange={handleChangeCustomerType}
+                        options={options}
+                        read-only >
+                        </lightning-combobox>
+                    </div>
+                  </div>
+                </div>
+              </td>
+
+
+              <td role="gridcell" style="text-align: center;">
+                <div class="slds-truncate" title="">
+                  <input type="checkbox" name={index} data-id={accObj.leadCustomerId} checked={accObj.pathFinder}
+                    onchange={handllePathFinder} tabindex="0"
+                    aria-labelledby="check-button-label-01 column-group-header" />
+                </div>
+              </td>
+
+              <td role="gridcell" style="text-align: center;">
+                <div class="slds-truncate" title="">
+                  <div class="slds-truncate" title="">{accObj.lastModifiedByName}</div>
+                </div>
+              </td>
+              <td role="gridcell" style="text-align: center;">
+                <!-- <lightning-formatted-date-time value={accObj.lastModifiedDate} year="3-digit" month="short" day="2-digit" hour="numeric"
+                                        ></lightning-formatted-date-time> -->
+
+                <lightning-formatted-date-time value={accObj.lastModifiedDate} year="numeric" month="numeric"
+                  day="numeric" hour="2-digit" minute="2-digit" hour12="true">
+                </lightning-formatted-date-time>
+
+                <!-- <div class="slds-truncate" title="">{accObj.lastModifiedDate}</div> -->
+              </td>
+
+            </tr>
+          </template>
+
+
+
+        </template>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+   <c-pagination-cmp tabledata={leadAccData} onaction={handlePaginationAction}>
+    <div class="slds-float_right" style="margin-right: 20rem;" slot="pageNumber"><b class="pagenumber">Page:1 of 10</b>
+    </div>
+  </c-pagination-cmp> 
+
+
+  <br />
+  <div class="slds-clearfix">
+    <div class="slds-m-top_small slds-m-bottom_medium slds-align_absolute-center">
+      <!-- Brand variant: Identifies the primary action in a group of buttons -->
+      <lightning-button variant="brand" label={label.Save} title={label.Save} onclick={handleSaveClick} class="slds-m-left_x-small">
+      </lightning-button>
+      <!-- Neutral variant (default) -->
+      <lightning-button label={label.Cancel} title={label.Cancel} onclick={handleClick} class="slds-m-left_x-small">
+      </lightning-button>
+      <!-- Neutral variant (default) -->
+      <lightning-button label={label.Reset} title={label.Reset} onclick={handleResetClick} class="slds-m-left_x-small">
+      </lightning-button>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,87 @@
+<template>
+
+  <div class="">
+    <!--<h1 style="font-size:24px; font-weight:700;">ARGENTINA </h1>-->
+
+    <div style="float:right">
+      <div class="header3"></div>
+      <input type="checkbox" class="openSidebarMenu3" id="openSidebarMenu3">
+      <label for="openSidebarMenu3" class="sidebarIconToggle3">
+        <lightning-icon icon-name="action:info" size="small" alternative-text={labels.Instructions} title={labels.Instructions}>
+        </lightning-icon>
+      </label>
+      <div class="sidebarMenu3">
+        <lightning-formatted-rich-text value={instrustions}>
+        </lightning-formatted-rich-text>
+      </div>
+    </div>
+  </div>
+  
+  <c-gtm-filter-panel panel-status={options} onaction={handleFilterPanelAction} onback={handleFilterPanelAction}>
+  </c-gtm-filter-panel>
+  <div class="table-scroll" style="height:300px; margin-top:15px;">
+
+    <table class="slds-table_fixed-layout slds-table slds-table_bordered"
+      aria-labelledby="element-with-table-label other-element-with-table-label">
+      <thead>
+        <tr>
+          <th class="fix fixHeader" style="width: 250px;">{labels.Customer_Lead_Customer}
+            <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="" class="slds-m-right" title="" name="customerName" onclick={handleSort}>
+            </lightning-icon>
+          </th>
+          <th style="width: 120px;" class="slds-cell-wrap fixHeader">{labels.All_Companies_Purchase_to_Customer1}
+            <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="" name="totalCompaniesPurches" class="slds-m-right" title="" onclick={handleSort}>
+            </lightning-icon>
+          </th>
+          <template for:each={columns} for:item="col">
+            <th title={col.helpText} style="width: 120px;margin-left: 10px;cursor: pointer;" class="slds-cell-wrap fixHeader" key={col.pid}>{col.pName}(%)
+            </th>
+          </template>
+          <th style="width: 100px;" class="fixHeader">{labels.Remaining}(%)
+            <!-- <lightning-icon icon-name="utility:sort" style="width: 100px;" size="xx-small" alternative-text="" class="slds-m-right" title="" name="percentageValue" onclick={handleSort}>
+            </lightning-icon> -->
+          </th>
+          <th class="fixHeader" style="width: 300px;">{labels.Check_If_Distribution_Is_Correct}
+            
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <template if:true={paginatedProductCategoryAllocation} for:each={paginatedProductCategoryAllocation}
+          for:item="productallocate">
+          <tr key={productallocate.customerId}>
+            <td class="slds-truncate fix" data-accountid={productallocate.customerId} title={productallocate.customerName}>{productallocate.customerName}</td>
+            <td data-accountid={productallocate.customerId}>{productallocate.totalCompaniesPurches}</td>
+            <template for:each={productallocate.productCategory} for:item="pc">
+              <td key={pc.pid}>
+                <lightning-input disabled={disableAll} type="number" step="0.01" min="0" style="margin-top:-16px;" class="inputDetails"
+                  data-id={pc.pId} data-detail={pc.GTMDetail} data-accountid={productallocate.customerId}
+                  value={pc.allocation} message-when-range-underflow="Please enter a correct value"
+                  onfocusout={handleProductDetailChange}  max="100" formatter="percent-fixed"></lightning-input>
+              </td>
+            </template>
+            <td data-accountid={productallocate.customerId} class="percentage dontremove">100%</td>
+            <td data-accountid={productallocate.customerId} class="distribution dontremove"
+              style="background:#368628; color:#fff;">Distribution completed</td>
+          </tr>
+        </template>
+        <template if:false={paginatedProductCategoryAllocation}>
+          <lightning-card>
+            <div style="text-align:center">
+              <p>Product Category Allocation Not Found</p>
+            </div>
+          </lightning-card>
+        </template>
+      </tbody>
+    </table>
+    <div if:true={showLoading} class="slds-spinner_inline spinner-padding">
+      <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </div>
+
+  </div>
+
+  <c-pagination-cmp page-size-value="100" tabledata={productAllocations} onaction={handlePaginationAction}>
+    <div class="slds-float_right" style="margin-right: 20rem;" slot="pageNumber"><b class="pagenumber">Page:1 of 10</b>
+    </div>
+  </c-pagination-cmp>
+</template>

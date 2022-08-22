@@ -1,0 +1,79 @@
+<template>
+      <!--<h2 style="font-size:20px; font-weight:600; margin:15px 0; background:orange; padding:5px;">POTENTIAL ALLOCATION BY MAIN CROPS	
+       </h2>	-->
+       <div class="">
+        <!--<h1 style="font-size:24px; font-weight:700;">ARGENTINA </h1>-->
+
+        <div style="float:right">
+          <div class="header4"></div>
+          <input type="checkbox" class="openSidebarMenu4" id="openSidebarMenu4">
+          <label for="openSidebarMenu4" class="sidebarIconToggle4">
+            <lightning-icon icon-name="action:info" size="small" alternative-text={labels.Instructions}
+              title={labels.Instructions}></lightning-icon>
+          </label>
+          <div class="sidebarMenu4">
+            <lightning-formatted-rich-text value={instrustions}>
+            </lightning-formatted-rich-text>
+          </div>
+        </div>
+      </div>
+      
+      <c-gtm-filter-panel panel-status={options} onaction={handleFilterPanelAction} onback={handleFilterPanelAction}>
+      </c-gtm-filter-panel>
+      <div class="table-scroll" style="height:300px;  margin-top:15px;">
+
+        <table class="slds-table_fixed-layout slds-table slds-table_bordered"
+          aria-labelledby="element-with-table-label other-element-with-table-label">
+          <thead>
+            <tr>
+              <th class="fix fixHeader" style="width: 250px;">{labels.Customer_Lead_Customer}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text="Warning!"
+                  class="slds-m-right" name="customerName" title="Warning" onclick={handleSort}></lightning-icon>
+              </th>
+              <th style="width: 120px;" class="slds-cell-wrap fixHeader">{labels.All_Companies_Purchase_to_Customer1}
+                <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text=""
+                  class="slds-m-right" name="totalCompaniesPurches" title="" onclick={handleSort}></lightning-icon>
+              </th>
+              <template for:each={columns} for:item="col">
+              <th title={col.helpText} key={col.cid} style="width: 120px;margin-left: 10px;cursor: pointer;" class="slds-cell-wrap fixHeader">{col.cName}(%)</th>
+              </template>
+              <th style="width: 100px;" class="fixHeader">{labels.Remaining}(%)
+                <!-- <lightning-icon icon-name="utility:sort" size="xx-small" alternative-text=""
+                  class="slds-m-right" title="" name="percentageValue" onclick={handleSort}></lightning-icon> -->
+              </th>
+              <th style="width: 300px;" class="fixHeader">{labels.Check_If_Distribution_Is_Correct}
+               
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <template if:true={paginatedCropAllocation} for:each={paginatedCropAllocation} for:item="cropallocate">
+            <tr key={cropallocate.customerId}>
+              <td class="fix slds-truncate" data-accountid={cropallocate.customerId} title={cropallocate.customerName}>{cropallocate.customerName}</td> 
+              <td data-accountid={cropallocate.customerId}>{cropallocate.totalCompaniesPurches}</td> 
+              <template for:each={cropallocate.crops} for:item="crop">
+                <td key={crop.cid}>
+                  <lightning-input disabled={disableAll} type="number"  step="0.01" min="0" style="margin-top:-16px;width: 100px;" class="inputDetails"
+                    data-id={crop.cId} data-detail={crop.GTMDetail} data-accountid={cropallocate.customerId}
+                    value={crop.allocation} message-when-range-underflow="Please enter a correct value"
+                    onfocusout={handleCropDetailChange} max="100" formatter="percent-fixed"></lightning-input>
+                </td>
+              </template>
+              <td data-accountid={cropallocate.customerId} class="percentage dontremove">100%</td>
+              <td data-accountid={cropallocate.customerId} class="distribution dontremove"
+              style="background:#368628; color:#fff;">{labels.Distribution_completed}</td>
+            </tr>
+          </template>
+          </tbody>
+        </table>
+
+      </div>
+
+      <c-pagination-cmp 
+      page-size-value="100"
+      tabledata={cropAllocations} 
+      onaction={handlePaginationAction}>
+          <div class="slds-float_right" style="margin-right: 20rem;" slot="pageNumber"><b class="pagenumber">Page:</b></div>
+  </c-pagination-cmp>
+</template>

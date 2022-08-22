@@ -1,0 +1,85 @@
+<template>
+    <div class="slds-theme_default">
+      <div class="header"></div>
+     
+      <div id='center' class="main center">
+        <div class="mainInner" style="margin:0px;">
+  
+          <div class="slds-theme_default slds-grid slds-wrap" style="padding: 10px 15px;">
+  
+            <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
+              <h3 style="text-align:center; font-size:22px; font-weight:500; color:orange;">{title}</h3>
+            </div>
+          
+            <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+              <lightning-button variant="brand" disabled={disableSubmit} label={labels.Submit} onclick={showModalBox}
+                style="margin:0 10px 0 0;"></lightning-button>
+              <lightning-button label={labels.Cancel} title={labels.Cancel} onclick={handleCancel}></lightning-button>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+              <h3 style="float:left; font-weight:700; color:green;">{labels.Currency_in_USD_Amount_in_Million}</h3><br/>
+              <h3 style="float:left; font-weight:700; color:green;">{labels.Entered_data_auto_save_into_the_system}</h3>
+            </div>
+
+            <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
+              <template if:true={isPathFinder}>
+
+                
+                <lightning-combobox name="Countries" label="Countries Name" value={selectedCountry} placeholder="--None--"
+                    options={getcountries} onchange={handleCountries} required></lightning-combobox>
+                </template>
+                
+               <template if:true={isPathFinder}> <h1 style="font-size:36px; font-weight:700; color:orange;">{SelectedCountry}</h1></template>
+               <template if:false={isPathFinder}> <h1 style="font-size:36px; font-weight:700; color:orange;">{country}</h1></template>
+            </div>
+
+            <div if:true={showLoading} class="slds-spinner_inline spinner-padding" style="margin-top: 40px;margin-left: 107px;">
+              <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+
+          </div>
+          
+           
+          <lightning-tabset>
+            <lightning-tab label={labels.IDENTIFICATION} name="c-gtm-identification" onactive={onTabChange}>
+              
+              <c-gtm-identification gtm-fiscal-year={fiscalyear} get-country-value-from-parent ={selectedCountry}> </c-gtm-identification>
+            </lightning-tab>
+                <lightning-tab name="c-gtm-potential-and-profile" onactive={onTabChange} label={labels.POTENTIAL_AND_PROFILE} title={labels.POTENTIAL_AND_PROFILE}>
+                  <c-gtm-potential-and-profile gtm-fiscal-year={fiscalyear} get-country-value-from-parent ={selectedCountry}></c-gtm-potential-and-profile>
+             </lightning-tab>
+              <lightning-tab name="c-gtm-category-allocation" onactive={onTabChange} label={labels.CATEGORY_ALLOCATION}>
+                  <c-gtm-category-allocation gtm-fiscal-year={fiscalyear} get-country-value-from-parent ={selectedCountry}></c-gtm-category-allocation>
+              </lightning-tab>
+              <lightning-tab name="c-gtm-crop-allocation" onactive={onTabChange} label={labels.CROP_ALLOCATION}>
+                <c-gtm-crop-allocation gtm-fiscal-year={fiscalyear} get-country-value-from-parent ={selectedCountry}></c-gtm-crop-allocation>
+              </lightning-tab>
+              <lightning-tab name="c-gtm-competition" onactive={onTabChange} label={labels.COMPETITION}>
+                <c-gtm-competition gtm-fiscal-year={fiscalyear} get-country-value-from-parent ={selectedCountry}></c-gtm-competition>
+              </lightning-tab>
+              <lightning-tab name="c-gtm-outlook" onactive={onTabChange} label={labels.OUTLOOK}>
+                <c-gtm-outlook gtm-fiscal-year={fiscalyear} get-country-value-from-parent ={selectedCountry}></c-gtm-outlook>
+              </lightning-tab>
+              
+              <lightning-tab  name="c-gtm-faqs" onactive ={onTabChange} label={labels.FAQ}>
+                <c-gtm-faqs gtm-fiscal-year={fiscalyear} get-country-value-from-parent ={selectedCountry}></c-gtm-faqs>
+              </lightning-tab>
+              
+
+            
+          </lightning-tabset>
+  
+        </div>
+  
+      </div>
+  
+  
+       <!-- modal start -->      
+     <template if:true={isShowModal}>
+       <c-generic-model-popup onclose={hideModalBox} onmodelsubmit={handleModelSubmit}></c-generic-model-popup>
+      </template>
+      <!-- modal end -->
+     
+    </div>
+  </template>

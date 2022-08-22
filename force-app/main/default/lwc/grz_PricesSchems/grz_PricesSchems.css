@@ -1,0 +1,141 @@
+.table-head {
+    color: #888888;
+    font-size: 12px;
+}
+.InnerCon{
+  padding-bottom: 2%;
+}
+.table-body-data {
+    color: #000000;
+    height: 30px;
+}
+.headingCls{
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+}
+.table-head-div{
+    background-color: white;
+    border: 1px solid #dad4d4;
+    min-height: 100px;
+    position: relative;
+}
+.tableRowCol{
+    padding-bottom: 2%;
+    height: 35px;
+}
+table tbody{
+    counter-reset: rowNumber;
+  }
+  
+  table tbody tr {
+    counter-increment: rowNumber;
+  }
+  
+  table tbody tr td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+  }
+  a{
+    text-decoration: underline;
+  }
+  .buttonClass {
+    background-color: #00bdf2;
+    color: #fff;
+    border: none;
+    padding: 6px 0px;
+    width: 100%;
+    font-size: 14px;
+    margin-top: 18px;
+    
+  }
+  
+  .displayClass{
+    display: flex;
+  }
+  
+  .download-div {
+    margin: 17px 0px;
+  }
+  .dwnld-btn {
+    border: 2px solid rgb(255 136 51);
+    padding: 7px 0px;
+    width: 100%;
+    background-color: white;
+    color: black;
+    float: right;
+  }
+  .download-icon {
+    padding-right: 10px;
+  }
+  .orangeClr{
+    color:#F47920;
+  }
+  .blackClr{
+    color: black;
+  }
+  .greyClr{
+    color: #888888;
+  }
+  .circularClass{
+    font-size: 18px;
+  }
+  .sbuClass{
+    font-size: 13px;
+  }
+  .downloadText{
+    font-size:14px;
+  }
+  @media screen and (max-width: 767px) {
+    .Year{
+      padding-right: 0px !important;
+    }
+    .circularClass{
+      font-size: 13px !important;
+      padding-top: 2%;
+    }
+    .sbuClass{
+      font-size: 11px !important;
+      padding-top: 2%;
+    }
+      .outerClass{
+        margin:3%;
+      }
+      .headingCls{
+        font-weight: bolder;
+        font-size: large;
+      }
+      .indexClass{
+        padding-top: 2%;
+        padding-left: 5%;
+        font-weight: bold;
+      }
+      .table-head-div{
+       margin-bottom:4%;
+    }
+  
+  .dwnld-btn {
+    width:140px;
+  }
+  .downloadText{
+    font-size:11px;
+  }
+    }
+
+  
+    
+    @media (min-width: 768px) and (max-width: 1023px) {
+      
+      .downloadText{
+        font-size:13px;
+      }
+      .circularClass{
+        margin-top: 1.5%;
+        font-size:15px;
+      }
+      .dwnld-btn{
+        width: 155px;
+      }
+      
+    }

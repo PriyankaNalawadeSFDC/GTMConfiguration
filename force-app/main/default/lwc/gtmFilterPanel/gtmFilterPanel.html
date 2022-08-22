@@ -1,0 +1,50 @@
+<template>
+  <div class="slds-grid slds-wrap slds-gutters" style="margin:0 !important;">
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+      <lightning-input name="search" type="text" value={filters.search} label={labels.Search_By_Customer_Name}
+        style="font-weight:600;" onfocusout={handleValueChange} autocomplete="off">
+      </lightning-input>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+      <lightning-combobox name="filter1" value={filters.filter1} label={labels.Filter_By} style="font-weight:600;" placeholder={labels.Select}
+        options={options1} onchange={handleValueChange}></lightning-combobox>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+      <lightning-combobox name="filter2" label={labels.Filter_By_Status} style="font-weight:600;" value={filters.filter2}
+        placeholder={labels.Select} options={options2} onchange={handleValueChange}></lightning-combobox>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+      <lightning-combobox name="filter3" label={labels.Filter_by_Path_Finder} style="font-weight:600;" value={filters.filter3}
+        placeholder={labels.Select} options={options3} onchange={handleValueChange}></lightning-combobox>
+    </div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12" style="margin-top: 23px;font-weight:600;">
+      <lightning-button-icon icon-name="utility:refresh"  name="reset" alternative-text={labels.reset} title={labels.reset} onclick={handleValueChange}></lightning-button-icon>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12"
+      style="margin-top:22px; background:#f1f1f1; padding:5px; text-align:center;">
+
+      <div style="color:#fff;
+                    border:1px solid #000;
+                    display:inline-block;
+                  background-color:#9f2723; padding:3px 5px; text-align:center; margin-right:10px;">
+        {panelStatusObj.notFilled} <span>{labels.Nos_Not_Filled}</span>
+      </div>
+      <div style="
+          border:1px solid #000;
+          display:inline-block;
+        background-color:#fbbc1a; padding:3px 5px; text-align:center; margin-right:10px;">{panelStatusObj.inProgress} <span>{labels.Nos_in_Progress}</span>
+      </div>
+
+
+      <div style="color:#fff;
+          border:1px solid #000;
+          display:inline-block;
+          background-color:#368628; padding:3px 5px; text-align:center; margin-right:10px;">{panelStatusObj.completed} <span>{labels.Nos_are_Completed}</span>
+      </div>
+    </div>
+  </div>
+</template>

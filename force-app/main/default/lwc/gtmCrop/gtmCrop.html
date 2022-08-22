@@ -1,0 +1,162 @@
+<template>
+
+
+    <table aria-multiselectable="true"
+        class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid"
+        aria-label="Example advanced table of Opportunities in actionable mode">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th aria-label="Close Date" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                    <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                            <span class="slds-truncate" title="Crop  Name">{label.Crop_Name} </span>
+                            
+                        </div>
+                    </a>
+                    <div class="slds-resizable">
+                        <input type="range" aria-label="Close Date column width"
+                            class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-2535" max="1000"
+                            min="20" tabindex="0" />
+                        <span class="slds-resizable__handle">
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </th>
+                <!-- <th aria-label="Stage" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                    <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                            <span class="slds-truncate" title="Sales Org">Sales Org</span>
+                            
+                        </div>
+                    </a>
+                    <div class="slds-resizable">
+                        <input type="range" aria-label="Stage column width"
+                            class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-2536" max="1000"
+                            min="20" tabindex="0" />
+                        <span class="slds-resizable__handle">
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </th> -->
+                <th aria-label="Confidence" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                    <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <span class="slds-truncate" title="Status">{label.Applicable_For}  {salesOrgName} </span>
+                            
+                        </div>
+                    </a>
+                    <div class="slds-resizable">
+                        <input type="range" aria-label="Confidence column width"
+                            class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-2537" max="1000"
+                            min="20" tabindex="0" />
+                        <span class="slds-resizable__handle">
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </th>
+
+                <th aria-label="Confidence" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                    <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                            <span class="slds-truncate" title="Last Modified By">{label.Last_Modified_By} </span>
+                            
+                        </div>
+                    </a>
+                    <div class="slds-resizable">
+                        <input type="range" aria-label="Confidence column width"
+                            class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-2538" max="1000"
+                            min="20" tabindex="0" />
+                        <span class="slds-resizable__handle">
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </th>
+
+
+                <th aria-label="Confidence" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                    <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                            <span class="slds-truncate" title="Last Modified By Date &amp; Time">{label.Last_Modified_By_Date} 
+                                &amp; Time</span>
+                            
+                        </div>
+                    </a>
+                    <div class="slds-resizable">
+                        <input type="range" aria-label="Confidence column width"
+                            class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-2539" max="1000"
+                            min="20" tabindex="0" />
+                        <span class="slds-resizable__handle">
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={paginatedCropSalesOrgMapping} for:item="pscm" for:index="index">
+                <tr key={pscm.cropId} draggable="true" ondrop={Drop} ondragstart={DragStart}
+                    ondragover={DragOver} id={index} data-pscm={pscm.cropId}>
+                    <td role="gridcell">
+                        <div class="slds-truncate" id={index} data-pscm={pscm.cropId}>{pscm.cropName}</div>
+                    </td>
+                    <!-- <td role="gridcell">
+                        <div class="slds-truncate" id={index} data-pscm={pscm.cropId}>{pscm.salesOrgNameCrop}</div>
+                    </td> -->
+
+
+                    <td    role="gridcell">
+                     
+                            <lightning-combobox name="options" data-id={pscm.cropId}  tabindex="0" id={index} data-pscm={pscm.cropId} value={pscm.gtmstatuscrop}
+                                 onchange={handleChangeCheckbox}   data-cpid={pscm.cropId} options={optionsCrop}
+                            ></lightning-combobox>
+                       
+                    </td>
+
+
+
+                    <td role="gridcell">
+                        <div class="slds-truncate" id={index} data-pscm={pscm.cropId}>{pscm.lastModByNameCrop}</div>
+                    </td>
+                    
+
+                    <td role="gridcell">
+                        <lightning-formatted-date-time  data-pscm={pscm.cropId} id={index} value={pscm.lastModifiedDateNameCrop} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                            minute="2-digit" hour12="true"></lightning-formatted-date-time>
+                    </td>
+                </tr>
+            </template>
+
+        </tbody>
+    </table>
+
+    <br/><br/><br/><br/>
+
+    <c-pagination-cmp tabledata={CropSalesorgMapping} onaction={handlePaginationAction}>
+        <div class="slds-float_right" style="margin-right: 20rem;" slot="pageNumber"><b class="pagenumber">Page:1 of
+                10</b></div>
+    </c-pagination-cmp>
+
+    <br />
+
+    <div class="slds-clearfix">
+        <div class="slds-m-top_small slds-m-bottom_medium slds-align_absolute-center">
+
+            <!-- Brand variant: Identifies the primary action in a group of buttons -->
+            <lightning-button variant="brand" label="Save" title="Save" onclick={SavehandleClick}
+                class="slds-m-left_x-small"></lightning-button>
+
+            <!-- Neutral variant (default) -->
+            <lightning-button label="Cancel" title="Cancel" onclick={handleClick} class="slds-m-left_x-small">
+            </lightning-button>
+
+        </div>
+    </div>
+
+
+</template>
