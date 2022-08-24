@@ -44,14 +44,13 @@ import Error_while_uploading_File from '@salesforce/label/c.Error_while_uploadin
 
 
 export default class GtmLeadCustomer extends LightningElement {
-  
+  @api selectedCountry1;
 
   @track customer = {
     id:'',
     name:''
     }
     @track leadAccData=[];
-    @track ownerShipBlank=[];
     instrustions = '';
     
    @track customerTypeForFilter='';
@@ -85,6 +84,8 @@ export default class GtmLeadCustomer extends LightningElement {
   fileReader;
   content;
   MAX_FILE_SIZE = 1500000;
+
+
 
   accSelectedData =[];
  
@@ -562,7 +563,7 @@ handleDownload(event){
     let selvalue = event.target.value;
     
     accObj.ownerShipName = selvalue;
-      console.log('data of ownership ' , selvalue);
+
     let tmData = JSON.parse(JSON.stringify(this.leadAccData));
     this.leadAccData = tmData;
 
@@ -615,25 +616,8 @@ handleDownload(event){
         if (this.leadAccData[i].isSelected) {
           this.accSelectedData.push(this.leadAccData[i]);
         }
-      }
-       /*  if (!this.leadAccData[i].ownerShip && this.leadAccData[i].isSelected) {
-         this.ownerShipBlank.push(this.leadAccData[i]);
-          console.log('selected OwnershipNull found  ', this.leadAccData[i]);
-        }
-      
-     if(this.ownerShipBlank.length>0){
-        const toastEvent = new ShowToastEvent({
-          title:'warning!',
-          message:'You cannot remove the ownership',
-          variant:'warning'
-        });
-        this.dispatchEvent(toastEvent);
-        setTimeout(() => {
-          location.reload();
-          
-        }, 200);
       }  
-else{*/
+
       console.log('selected account for check box true ',this.accSelectedData);
       this.showLoadingSpinner = true;   
 
@@ -671,7 +655,7 @@ else{*/
       }
 
 
-    //}
+     
 
    }
 
